@@ -1,5 +1,5 @@
 from django.db import models
-from .utils import get_link
+from .utils import get_link, get_items
 
 # Create your models here.
 class Indice(models.Model):
@@ -25,8 +25,8 @@ class Items(models.Model):
     current_price 	    = models.FloatField(blank=True)
     old_price 	        = models.FloatField(default=0)
     price_difference    = models.FloatField(default=0)
-    trading 	        = models.CharField(max_length=30)
-    trading_count 	    = models.IntegerField()
+    rating 	            = models.CharField(max_length=30)
+    rating_count 	    = models.IntegerField()
     url 		        = models.URLField()
     indices 	        = models.ForeignKey(Indice, on_delete=models.CASCADE)
     created 	        = models.DateTimeField(auto_now_add=True)
@@ -42,9 +42,8 @@ class Items(models.Model):
         if self.imagen and hasattr(self.imagen, 'url'):
             return self.imagen.url
 
-    def save(self, *args, **kwargs):
-        self.url = get_link(self.name)
-        super().save(*args, **kwargs)
+    
+
 
 
     
