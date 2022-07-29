@@ -42,7 +42,7 @@
                 <div class="card-header" >
                     <h5>{{indice.name}}</h5>
                     <a href="{% url 'add_items' indice.id %}"><button class="btn btn-primary" >Add Items</button></a>
-                    <a href=""><button class="btn btn-primary" >Ver</button></a>
+                    <a href="{% url 'show_items' indice.id %}"><button class="btn btn-primary" >Ver</button></a>
                     <a href=""><button class="btn btn-danger" >Eliminar</button></a>
                     
                 </div>

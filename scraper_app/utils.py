@@ -41,11 +41,13 @@ def get_items(url):
                 rating_count = str(result.find_all('span', {'aria-label':True})[1].text)
                 print(rating_count)
                 rating_count = rating_count.split(",")
-                print()
+                print(rating_count)
                 if len(rating_count)==2:
                     rating_count = int(rating_count[0] + rating_count[1])
+                    print(rating_count)
                 else:
                     rating_count = int(rating_count[0])
+                    print(rating_count)
             except AttributeError:
                 continue
 

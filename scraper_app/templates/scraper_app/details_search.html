@@ -1,0 +1,64 @@
+{% extends 'base/base.html' %}
+
+
+{% block content %}
+    
+    <!-- Modal -->
+    <div class="modal fade" id="addItemModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Añadir un elemento para el seguimiento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="POST" autocomplete="off">
+                        {% csrf_token %}
+                        {% comment %} {{form|crispy}} {% endcomment %}
+                        <button type="submit" class="btn btn-primary mt-2">Guardar</button>
+                    </form>
+                </div>
+                
+            </div>   
+        </div>
+    </div>
+  
+    <div class="row">
+        <div class="col text-left">
+            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addItemModal">Agregar</button>
+            <a href="">
+                <button class="btn btn-info">Actualizar</button>
+            </a>
+        </div>
+        <div class="col" style="text-align:right">
+            <div>Total de Indices: </div>
+            <div>Total de Indices Actualizados: </div>
+        </div>
+    </div>
+    {% if items %}
+        <h3>Indices de Busqueda</h3>
+        {% for item in items %}
+            <div class="card mt-3">
+                <div class="card-header" >
+                    <h5>{{item.name}}</h5>
+                    <a href=""><button class="btn btn-primary" >Add Items</button></a>
+                    <a href=""><button class="btn btn-primary" >Ver</button></a>
+                    <a href=""><button class="btn btn-danger" >Eliminar</button></a>
+                    
+                </div>
+                <div class="card-body">
+                    <div class="blockquote">
+                        {% comment %} <div>precio actual ($): {{indice}}</div>
+                        <div>precio antiguo ($): {{item.old_price}}</div>
+                        <div>diferencia ($): {{item.price_difference|colorize}}</div> {% endcomment %}
+                        {% comment %} <div>cantidad de items: {{indice.count_items}}</div>
+                        <div>enlace: <a href="{{indice.url}}">{{indice.url}}</a></div> {% endcomment %}
+                        
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <h3>No hay ningun indice </h3>
+    {% endif %}
+{% endblock content %}
