@@ -31,7 +31,7 @@
             </a>
         </div>
         <div class="col" style="text-align:right">
-            <div>Total de Indices: </div>
+            <div>Total de Indices: {{indices|length}}</div>
             <div>Total de Indices Actualizados: </div>
         </div>
     </div>
@@ -40,25 +40,26 @@
         {% for indice in indices %}
             <div class="card mt-3">
                 <div class="card-header" >
-                    <h5>{{indice.name}}</h5>
-                    <a href="{% url 'add_items' indice.id %}"><button class="btn btn-primary" >Add Items</button></a>
-                    <a href="{% url 'show_items' indice.id %}"><button class="btn btn-primary" >Ver</button></a>
-                    <a href=""><button class="btn btn-danger" >Eliminar</button></a>
+                    <h5>Nombre de Indice: {{indice.name}}</h5>
+                    <a href="{% url 'add_items' indice.id %}"><button class="btn btn-primary btn-sm " >Cargar Articulos</button></a>
+                    <a href="{% url 'show_items' indice.id %}"><button class="btn btn-secondary btn-sm" >Ver</button></a>
+                    <a href="{% url 'show_items' indice.id %}"><button class="btn btn-success btn-sm me-md-2" >Exportar a Excel</button></a>
+                    <a href=""><button class="btn btn-danger btn-sm" >Eliminar</button></a>
                     
                 </div>
+                
                 <div class="card-body">
                     <div class="blockquote">
-                        {% comment %} <div>precio actual ($): {{indice}}</div>
-                        <div>precio antiguo ($): {{item.old_price}}</div>
-                        <div>diferencia ($): {{item.price_difference|colorize}}</div> {% endcomment %}
-                        <div>cantidad de items: {{indice.count_items}}</div>
-                        <div>enlace: <a href="{{indice.url}}">{{indice.url}}</a></div>
+                        <div>Items Encontrados: {{indice.count_items}}</div>
+                        <div>Enlace: <a href="{{indice.url}}">{{indice.url}}</a></div>
+                        <div>Created: {{indice.created}}</div>
+                        <div>Updated: {{indice.updated}}</div>
                         
                     </div>
                 </div>
             </div>
         {% endfor %}
     {% else %}
-        <h3>No hay ningun indice </h3>
+        <h3>No hay ningun indice. Por favor, inserte un indice. </h3>
     {% endif %}
 {% endblock content %}

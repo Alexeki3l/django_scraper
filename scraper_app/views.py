@@ -1,3 +1,4 @@
+from itertools import count
 from django.shortcuts import render, redirect
 from .models import Indice, Items
 from .utils import get_items
@@ -22,6 +23,7 @@ def add_items(request, indice_id):
         )
         list_items.append(articulo)
     Items.objects.bulk_create(list_items)
+    Indice.objects.filter(id = indice_id).update(count_items = len(list_items))
     return redirect('home')
 
 def show_items(request, indice_id):
