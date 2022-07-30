@@ -9,7 +9,7 @@ from django.views.generic import ListView, DetailView
 
 def add_items(request, indice_id):
     indice = Indice.objects.filter(id = indice_id).first()
-    product_names, ratings, ratings_count, prices, product_urls = get_items(indice.url)
+    product_names, ratings, ratings_count, prices, product_urls, images = get_items(indice.url)
     list_items = []
     for i in range(3):
         
@@ -17,6 +17,7 @@ def add_items(request, indice_id):
             name = product_names[i],
             current_price = prices[i],
             rating = ratings[i],
+            image = images[i],
             rating_count = ratings_count[i],
             url = product_urls[i],
             indices = indice

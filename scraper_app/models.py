@@ -1,6 +1,8 @@
 from django.db import models
 from .utils import get_link, get_items
 
+from django.conf import settings
+
 # Create your models here.
 class Indice(models.Model):
     name 		= models.CharField(max_length=255)
@@ -39,8 +41,9 @@ class Items(models.Model):
         return str(self.name)
 
     def image_url(self):
-        if self.imagen and hasattr(self.imagen, 'url'):
-            return self.imagen.url
+        if self.image and hasattr(self.image, 'url'):
+            return self.image.url
+
 
     
 

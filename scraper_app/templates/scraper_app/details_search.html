@@ -22,15 +22,18 @@
         {% for item in items %}
             <div class="card mt-3">
                 <div class="card-header" >
+                    
                     <h5>{{item.name}}</h5>                    
                     <a href=""><button class="btn btn-danger" >Eliminar</button></a>
                     
                 </div>
                 <div class="card-body">
                     <div class="blockquote">
+                        <div><img src="{{item.image.url}}" class="img-fluid" style="max-width: 180px;"></div>
                         <div>Precio Actual: {{item.current_price}}</div>
                         <div>Precio Anterior: {{item.old_price}}</div>
                         <div>Diferencia de Precio: {{item.price_difference}}</div>
+                        
                         <div>Clasificacion: {{item.rating}}</div>
                         <div>Contador de Clasificaciones: {{item.rating_count}}</div>
                         <div>URL*: <a href="{{item.url}}">{{item.url}}</a></div>
