@@ -25,61 +25,67 @@ def get_items(url):
     images          =[]
 
     # BUSCA EN 10 PAGINAS
-    for i in range(1,11):
+   
+    for i in range(1,21):
+            
         print('Procesando {0}...'.format(url + '&page={0}'.format(i)))
-        response = requests.get(url + '&page={0}'.format(i), headers=headers)
+        try:
+            response = requests.get(url + '&page={0}'.format(i), headers=headers)
+        except:
+            continue
         soup = BeautifulSoup(response.content, 'html.parser')
-        
+                
         resultados = soup.find_all('div', {'class':'s-result-item', 'data-component-type':'s-search-result'})
-        
-        # ITERAR EN CADA ARTICULO DE CADA PAGINA
+                
+            # ITERAR EN CADA ARTICULO DE CADA PAGINA
         for result in resultados:
-            # product_name = result.h2.text
-            
-            product_name = result.find('span', {'class':'a-text-normal'}).text 
-            
-            try:
-                rating = result.find('i', {'class':'a-icon'}).text
-                rating_count = str(result.find_all('span', {'aria-label':True})[1].text)
-                print(rating_count)
-                rating_count = rating_count.split(",")
-                print(rating_count)
-                if len(rating_count)==2:
-                    rating_count = int(rating_count[0] + rating_count[1])
-                    print(rating_count)
-                else:
-                    rating_count = int(rating_count[0])
-                    print(rating_count)
-            except AttributeError:
-                continue
+                    # product_name = result.h2.text
+                    
+                    product_name = result.find('span', {'class':'a-text-normal'}).text 
+                    
+                    try:
+                        rating = result.find('i', {'class':'a-icon'}).text
+                        rating_count = str(result.find_all('span', {'aria-label':True})[1].text)
+                        
+                        rating_count = rating_count.split(",")
+                        
+                        if len(rating_count)==2:
+                            rating_count = int(rating_count[0] + rating_count[1])
+                            
+                        else:
+                            rating_count = rating_count[0]
+                            
+                            if not len(rating_count.split(" "))>1:
+                                rating_count = int(rating_count[0])
+                                
+                        price = (result.find('span',{'class':'a-offscreen'}).text)[1:]
+                        image = result.find('img',{'class':'s-image'}).get('src')
+                        
 
-            try:
-                price = (result.find('span',{'class':'a-offscreen'}).text)[1:]
-                image = result.find('img',{'class':'s-image'}).get('src')
-                
+                        image = get_image(url,image, headers)
 
-                image = get_image(url,image, headers)
+                        images.append(image)
 
-                images.append(image)
-
-                product_url = 'https://www.amazon.com' + result.h2.a['href']
-                product_names.append(product_name)
-                ratings.append(rating)
-                ratings_count.append(rating_count)
-                prices.append(price)
-                product_urls.append(product_url) 
-                
-            except AttributeError:
-                continue
-        break
+                        product_url = 'https://www.amazon.com' + result.h2.a['href']
+                        product_names.append(product_name)
+                        ratings.append(rating)
+                        ratings_count.append(rating_count)
+                        prices.append(price)
+                        product_urls.append(product_url) 
+                        
+                    except:
+                        
+                        continue
+    print("Busqueda Terminada...")     
     return product_names, ratings, ratings_count, prices, product_urls, images
+
+
 
 # Se encarga de obtener la URL de cada nombre que se le pase
 def get_link(name):
     search_query = name.replace(" ","+")
     url = "https://www.amazon.com/s?k={0}".format(search_query)
-    print()
-    # return url
+    return url
 
 
 # Se encarga de descargar las imagenes y guardarlas en la carpeta 'media'

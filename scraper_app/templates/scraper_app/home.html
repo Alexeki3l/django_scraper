@@ -1,5 +1,5 @@
 {% extends 'base/base.html' %}
-
+{% load crispy_forms_tags %}
 
 {% block content %}
     
@@ -14,7 +14,7 @@
                 <div class="modal-body">
                     <form action="" method="POST" autocomplete="off">
                         {% csrf_token %}
-                        {% comment %} {{form|crispy}} {% endcomment %}
+                            {{form|crispy}}
                         <button type="submit" class="btn btn-primary mt-2">Guardar</button>
                     </form>
                 </div>
@@ -35,6 +35,11 @@
             <div>Total de Indices Actualizados: </div>
         </div>
     </div>
+    {% if error %}
+        <div class="alert alert-danger" role="alert">
+            {{error}}
+        </div>
+    {% endif %}  
     {% if indices %}
         <h3>Indices de Busqueda</h3>
         {% for indice in indices %}
@@ -44,7 +49,7 @@
                     <a href="{% url 'add_items' indice.id %}"><button class="btn btn-primary btn-sm " >Cargar Articulos</button></a>
                     <a href="{% url 'show_items' indice.id %}"><button class="btn btn-secondary btn-sm" >Ver</button></a>
                     <a href="{% url 'show_items' indice.id %}"><button class="btn btn-success btn-sm me-md-2" >Exportar a Excel</button></a>
-                    <a href=""><button class="btn btn-danger btn-sm" >Eliminar</button></a>
+                    <a href="{% url 'delete_indice' indice.pk %}"><button class="btn btn-danger btn-sm" >Eliminar</button></a>
                     
                 </div>
                 
